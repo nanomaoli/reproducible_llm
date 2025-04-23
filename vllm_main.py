@@ -7,6 +7,7 @@ from vllm import SamplingParams
 import os
 import argparse
 import json
+import glob
 
 from vllm.entrypoints.chat_utils import (apply_hf_chat_template,
                                          parse_chat_messages,)
@@ -42,6 +43,34 @@ def set_seed(seed):
     torch.cuda.manual_seed_all(seed)
     torch.backends.cudnn.deterministic = True
     torch.backends.cudnn.benchmark = False
+
+
+# Determine the starting point based on existing .pt files
+def get_resume_point(output_path, batch_size):
+    # Find all .pt files in the output directory
+    pt_files = glob.glob(f'{output_path}/problem_*_token_ids_*.pt')
+    if not pt_files:
+        return 0  # No files exist, start from the beginning
+
+    # Extract global_idx from filenames
+    global_indices = []
+    for pt_file in pt_files:
+        # Filename format: problem_<global_idx>_token_ids_*.pt
+        parts = os.path.basename(pt_file).split('_')
+        try:
+            global_idx = int(parts[1])  # Extract the global_idx
+            global_indices.append(global_idx)
+        except (IndexError, ValueError):
+            continue
+
+    if not global_indices:
+        return 0  # No valid indices found, start from the beginning
+
+    # Find the largest global_idx and calculate the starting batch
+    max_global_idx = max(global_indices)
+    resume_point = ((max_global_idx + 1) // batch_size) * batch_size
+    print(f"Resuming from batch starting at index {resume_point} (max_global_idx={max_global_idx})")
+    return resume_point
 
 
 if __name__ == '__main__':
@@ -103,10 +132,11 @@ if __name__ == '__main__':
     # Process in batches
     qa_pairs = []
     jsonl_path = f'{output_path}/qa_pairs_{args.dtype}_bs_{args.batch_size}.jsonl'
-    # total_samples = 4
-    for batch_start in range(0, total_samples, args.batch_size):
+    
+    start_point = get_resume_point(output_path, args.batch_size)
+    
+    for batch_start in range(start_point, total_samples, args.batch_size):
         batch_end = min(batch_start + args.batch_size, total_samples)
-        # current_batch = level_5_samples['problem'][batch_start:batch_end]
         current_batch = conversations[batch_start:batch_end]
         print(f"Processing batch {batch_start//args.batch_size + 1}/{(total_samples + args.batch_size - 1)//args.batch_size}")
         
@@ -147,6 +177,7 @@ if __name__ == '__main__':
         # Generate with logits for current batch
         response = model.generate(prompts, sampling_params=sampling_params)
         # Extract output text and logits for each sample in the batch
+        qa_pairs = []
         for idx, output in enumerate(response):
             global_idx = batch_start + idx
             generated_text = output.outputs[0].text
@@ -169,9 +200,13 @@ if __name__ == '__main__':
                     token_ids[i, j] = token_id
                     logprobs[i, j] = L.logprob
             
-            torch.save(token_ids, f'{output_path}/problem_{global_idx}_token_ids_bs_{args.batch_size}_{args.dtype}_max_tokens_{args.max_tokens}.pt')
-            torch.save(logprobs, f'{output_path}/problem_{global_idx}_logprobs_bs_{args.batch_size}_{args.dtype}_max_tokens_{args.max_tokens}.pt')
+            torch.save(token_ids, f'{output_path}/problem_{global_idx}_{args.task}_token_ids_bs_{args.batch_size}_{args.dtype}_max_tokens_{args.max_tokens}.pt')
+            torch.save(logprobs, f'{output_path}/problem_{global_idx}_{args.task}_logprobs_bs_{args.batch_size}_{args.dtype}_max_tokens_{args.max_tokens}.pt')
             print(f"Saved tensors for problem {global_idx}")
+            
+            qa_pairs.append(qa_pair)
     
-            with open(jsonl_path, 'a') as f:
+        with open(jsonl_path, 'a') as f:
+            for qa_pair in qa_pairs:
                 f.write(json.dumps(qa_pair) + '\n')
+        print(f"Saved QA pairs to for batch {batch_start//args.batch_size + 1}")
