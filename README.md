@@ -39,3 +39,10 @@ Output files will be put under `./outputs/vllm` directory.
     - In the 3nd tmux sessionL `bash sh/run_followup_3.sh`. This runs some 2-GPU settings on GPU 2,3.
 
 2. Output files will be archived and uploaded to a hf repo automatically, while locally they will be put under `./followup_exp_outputs/vllm` directory. 
+
+3. For the reversed order experiments:
+    - Also three scripts using different GPUs, so, please run them Concurrently from 3 tmux sessions.
+    - In any tmux session, `cd` to the root directory of this repo. Make sure you are using the reproducible_llm environment.
+    - In the 1st tmux session: `bash sh/run_reorder_1.sh`. This runs 4-GPU settings on GPU 4,5,6,7.
+    - In the 2nd tmux sessionL `bash sh/run_reorder_2.sh`. This runs some 2-GPU settings on GPU 0,1.
+    - In the 3nd tmux sessionL `bash sh/run_reorder_3.sh`. This runs some 2-GPU settings on GPU 2,3.
