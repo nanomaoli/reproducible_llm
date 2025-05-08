@@ -14,8 +14,6 @@ for task in livecodebench_easy; do
                 --max_tokens 32768 \
                 --exp_name 2A100_CATCHUP_${task}_${dtype}_bs_${batch_size} > 2A100_CATCHUP_deepseek-qwen_${task}_${dtype}_bs_${batch_size}.log 2>&1
             echo "$(date): FINISH experiment: Model=DeepSeek-Qwen, Task=$task, Dtype=$dtype, Batch Size=$batch_size" >> 2A100_followup.log
-            zip -r 2A100_CATCHUP_deepseek-qwen_${task}_${dtype}_bs_${batch_size}.zip ./followup_exp_outputs/vllm/2A100_CATCHUP_${task}_${dtype}_bs_${batch_size}/deepseek-ai/DeepSeek-R1-Distill-Qwen-7B
-            python upload_to_hf.py --file 2A100_LAYERCAST_deepseek-qwen_${task}_${dtype}_bs_${batch_size}.zip
         done
     done
 done
@@ -32,8 +30,6 @@ for task in math500 gpqa_diamond; do
                 --max_tokens 32768 \
                 --exp_name 2A100_LAYERCAST_${task}_${dtype}_bs_${batch_size} > 2A100_LAYERCAST_deepseek-qwen_${task}_${dtype}_bs_${batch_size}.log 2>&1
             echo "$(date): FINISH experiment: LAYERCAST, Model=DeepSeek-Qwen, Task=$task, Dtype=$dtype, Batch Size=$batch_size" >> 2A100_followup.log
-            zip -r 2A100_LAYERCAST_deepseek-qwen_${task}_${dtype}_bs_${batch_size}.zip ./followup_exp_outputs/vllm/2A100_LAYERCAST_${task}_${dtype}_bs_${batch_size}/deepseek-ai/DeepSeek-R1-Distill-Qwen-7B
-            python upload_to_hf.py --file 2A100_LAYERCAST_deepseek-qwen_${task}_${dtype}_bs_${batch_size}.zip
         done
     done
 done
@@ -52,8 +48,6 @@ for task in aime24; do
                     --passk $passk \
                     --exp_name 2A100_PASS_${passk}_${task}_${dtype}_bs_${batch_size} > 2A100_PASS_${passk}_deepseek-llama_${task}_${dtype}_bs_${batch_size}.log 2>&1
                 echo "$(date): FINISH experiment: PASS_${passk}, Model=DeepSeek-Llama, Task=$task, Dtype=$dtype, Batch Size=$batch_size" >> 2A100_followup.log
-                zip -r 2A100_PASS_deepseek-llama_${task}_${dtype}_bs_${batch_size}.zip ./followup_exp_outputs/vllm/2A100_PASS_${passk}_${task}_${dtype}_bs_${batch_size}/deepseek-ai/DeepSeek-R1-Distill-Llama-8B
-                python upload_to_hf.py --file 2A100_PASS_deepseek-llama_${task}_${dtype}_bs_${batch_size}.zip
             done
         done
     done
@@ -73,8 +67,6 @@ for task in math500; do
                     --passk $passk \
                     --exp_name 2A100_PASS_${passk}_${task}_${dtype}_bs_${batch_size} > 2A100_PASS_${passk}_deepseek-llama_${task}_${dtype}_bs_${batch_size}.log 2>&1
                 echo "$(date): FINISH experiment: PASS_${passk}, Model=DeepSeek-Llama, Task=$task, Dtype=$dtype, Batch Size=$batch_size" >> 2A100_followup.log
-                zip -r 2A100_PASS_deepseek-llama_${task}_${dtype}_bs_${batch_size}.zip ./followup_exp_outputs/vllm/2A100_PASS_${passk}_${task}_${dtype}_bs_${batch_size}/deepseek-ai/DeepSeek-R1-Distill-Llama-8B
-                python upload_to_hf.py --file 2A100_PASS_deepseek-llama_${task}_${dtype}_bs_${batch_size}.zip
             done
         done
     done
@@ -94,8 +86,6 @@ for task in aime24; do
                     --passk $passk \
                     --exp_name 2A100_PASS_${passk}_${task}_${dtype}_bs_${batch_size} > 2A100_PASS_${passk}_llama_${task}_${dtype}_bs_${batch_size}.log 2>&1
                 echo "$(date): FINISH experiment: PASS_${passk}, Model=Llama, Task=$task, Dtype=$dtype, Batch Size=$batch_size" >> 2A100_followup.log
-                zip -r 2A100_PASS_llama_${task}_${dtype}_bs_${batch_size}.zip ./followup_exp_outputs/vllm/2A100_PASS_${passk}_${task}_${dtype}_bs_${batch_size}/meta-llama/Llama-3.1-8B-Instruct
-                python upload_to_hf.py --file 2A100_PASS_llama_${task}_${dtype}_bs_${batch_size}.zip
             done
         done
     done
@@ -115,8 +105,6 @@ for task in math500; do
                     --passk $passk \
                     --exp_name 2A100_PASS_${passk}_${task}_${dtype}_bs_${batch_size} > 2A100_PASS_${passk}_llama_${task}_${dtype}_bs_${batch_size}.log 2>&1
                 echo "$(date): FINISH experiment: PASS_${passk}, Model=Llama, Task=$task, Dtype=$dtype, Batch Size=$batch_size" >> 2A100_followup.log
-                zip -r 2A100_PASS_llama_${task}_${dtype}_bs_${batch_size}.zip ./followup_exp_outputs/vllm/2A100_PASS_${passk}_${task}_${dtype}_bs_${batch_size}/meta-llama/Llama-3.1-8B-Instruct
-                python upload_to_hf.py --file 2A100_PASS_llama_${task}_${dtype}_bs_${batch_size}.zip
             done
         done
     done

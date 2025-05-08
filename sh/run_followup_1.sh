@@ -16,8 +16,6 @@ for task in aime24 math500; do
                 --max_tokens 32768 \
                 --exp_name 4A100_LAYERCAST_${task}_${dtype}_bs_${batch_size} > 4A100_LAYERCAST_deepseek-qwen_${task}_${dtype}_bs_${batch_size}.log 2>&1
             echo "$(date): FINISH experiment: LAYERCAST, Model=DeepSeek-Qwen, Task=$task, Dtype=$dtype, Batch Size=$batch_size" >> 4A100_followup.log
-            zip -r 4A100_LAYERCAST_deepseek-qwen_${task}_${dtype}_bs_${batch_size}.zip ./followup_exp_outputs/vllm/4A100_LAYERCAST_${task}_${dtype}_bs_${batch_size}/deepseek-ai/DeepSeek-R1-Distill-Qwen-7B
-            python upload_to_hf.py --file 4A100_LAYERCAST_deepseek-qwen_${task}_${dtype}_bs_${batch_size}.zip
         done
     done
 done
@@ -36,8 +34,6 @@ for task in aime24; do
                     --passk $passk \
                     --exp_name 4A100_PASS_${passk}_${task}_${dtype}_bs_${batch_size} > 4A100_PASS_${passk}_deepseek-qwen_${task}_${dtype}_bs_${batch_size}.log 2>&1
                 echo "$(date): FINISH experiment: PASS_${passk}, Model=DeepSeek-Qwen, Task=$task, Dtype=$dtype, Batch Size=$batch_size" >> 4A100_followup.log
-                zip -r 4A100_PASS_deepseek-qwen_${task}_${dtype}_bs_${batch_size}.zip ./followup_exp_outputs/vllm/4A100_PASS_${passk}_${task}_${dtype}_bs_${batch_size}/deepseek-ai/DeepSeek-R1-Distill-Qwen-7B
-                python upload_to_hf.py --file 4A100_PASS_deepseek-qwen_${task}_${dtype}_bs_${batch_size}.zip
             done
         done
     done
@@ -57,8 +53,6 @@ for task in math500; do
                     --passk $passk \
                     --exp_name 4A100_PASS_${passk}_${task}_${dtype}_bs_${batch_size} > 4A100_PASS_${passk}_deepseek-qwen_${task}_${dtype}_bs_${batch_size}.log 2>&1
                 echo "$(date): FINISH experiment: PASS_${passk}, Model=DeepSeek-Qwen, Task=$task, Dtype=$dtype, Batch Size=$batch_size" >> 4A100_followup.log
-                zip -r 4A100_PASS_deepseek-qwen_${task}_${dtype}_bs_${batch_size}.zip ./followup_exp_outputs/vllm/4A100_PASS_${passk}_${task}_${dtype}_bs_${batch_size}/deepseek-ai/DeepSeek-R1-Distill-Qwen-7B
-                python upload_to_hf.py --file 4A100_PASS_deepseek-qwen_${task}_${dtype}_bs_${batch_size}.zip
             done
         done
     done
@@ -76,8 +70,6 @@ for task in livecodebench_easy livecodebench_medium livecodebench_hard gpqa_diam
                 --max_tokens 32768 \
                 --exp_name 4A100_LAYERCAST_${task}_${dtype}_bs_${batch_size} > 4A100_LAYERCAST_deepseek-qwen_${task}_${dtype}_bs_${batch_size}.log 2>&1
             echo "$(date): FINISH experiment: LAYERCAST, Model=DeepSeek-Qwen, Task=$task, Dtype=$dtype, Batch Size=$batch_size" >> 4A100_followup.log
-            zip -r 4A100_LAYERCAST_deepseek-qwen_${task}_${dtype}_bs_${batch_size}.zip ./followup_exp_outputs/vllm/4A100_LAYERCAST_${task}_${dtype}_bs_${batch_size}/deepseek-ai/DeepSeek-R1-Distill-Qwen-7B
-            python upload_to_hf.py --file 4A100_LAYERCAST_deepseek-qwen_${task}_${dtype}_bs_${batch_size}.zip
         done
     done
 done
@@ -96,8 +88,6 @@ for task in aime24; do
                     --passk $passk \
                     --exp_name 4A100_PASS_${passk}_${task}_${dtype}_bs_${batch_size} > 4A100_PASS_${passk}_qwen_${task}_${dtype}_bs_${batch_size}.log 2>&1
                 echo "$(date): FINISH experiment: PASS_${passk}, Model=Qwen, Task=$task, Dtype=$dtype, Batch Size=$batch_size" >> 4A100_followup.log
-                zip -r 4A100_PASS_qwen_${task}_${dtype}_bs_${batch_size}.zip ./followup_exp_outputs/vllm/4A100_PASS_${passk}_${task}_${dtype}_bs_${batch_size}/Qwen/Qwen2.5-7B-Instruct
-                python upload_to_hf.py --file 4A100_PASS_qwen_${task}_${dtype}_bs_${batch_size}.zip
             done
         done
     done
@@ -117,8 +107,6 @@ for task in aime24; do
                     --passk $passk \
                     --exp_name 4A100_PASS_${passk}_${task}_${dtype}_bs_${batch_size} > 4A100_PASS_${passk}_llama_${task}_${dtype}_bs_${batch_size}.log 2>&1
                 echo "$(date): FINISH experiment: PASS_${passk}, Model=Llama, Task=$task, Dtype=$dtype, Batch Size=$batch_size" >> 4A100_followup.log
-                zip -r 4A100_PASS_llama_${task}_${dtype}_bs_${batch_size}.zip ./followup_exp_outputs/vllm/4A100_PASS_${passk}_${task}_${dtype}_bs_${batch_size}/meta-llama/Llama-3.1-8B-Instruct
-                python upload_to_hf.py --file 4A100_PASS_llama_${task}_${dtype}_bs_${batch_size}.zip
             done
         done
     done
@@ -138,8 +126,6 @@ for task in math500; do
                     --passk $passk \
                     --exp_name 4A100_PASS_${passk}_${task}_${dtype}_bs_${batch_size} > 4A100_PASS_${passk}_qwen_${task}_${dtype}_bs_${batch_size}.log 2>&1
                 echo "$(date): FINISH experiment: PASS_${passk}, Model=Qwen, Task=$task, Dtype=$dtype, Batch Size=$batch_size" >> 4A100_followup.log
-                zip -r 4A100_PASS_qwen_${task}_${dtype}_bs_${batch_size}.zip ./followup_exp_outputs/vllm/4A100_PASS_${passk}_${task}_${dtype}_bs_${batch_size}/Qwen/Qwen2.5-7B-Instruct
-                python upload_to_hf.py --file 4A100_PASS_qwen_${task}_${dtype}_bs_${batch_size}.zip
             done
         done
     done
@@ -159,8 +145,6 @@ for task in math500; do
                     --passk $passk \
                     --exp_name 4A100_PASS_${passk}_${task}_${dtype}_bs_${batch_size} > 4A100_PASS_${passk}_llama_${task}_${dtype}_bs_${batch_size}.log 2>&1
                 echo "$(date): FINISH experiment: PASS_${passk}, Model=Llama, Task=$task, Dtype=$dtype, Batch Size=$batch_size" >> 4A100_followup.log
-                zip -r 4A100_PASS_llama_${task}_${dtype}_bs_${batch_size}.zip ./followup_exp_outputs/vllm/4A100_PASS_${passk}_${task}_${dtype}_bs_${batch_size}/meta-llama/Llama-3.1-8B-Instruct
-                python upload_to_hf.py --file 4A100_PASS_llama_${task}_${dtype}_bs_${batch_size}.zip
             done
         done
     done
@@ -180,8 +164,6 @@ for task in aime24; do
                     --passk $passk \
                     --exp_name 4A100_PASS_${passk}_${task}_${dtype}_bs_${batch_size} > 4A100_PASS_${passk}_deepseek-llama_${task}_${dtype}_bs_${batch_size}.log 2>&1
                 echo "$(date): FINISH experiment: PASS_${passk}, Model=DeepSeek-Llama, Task=$task, Dtype=$dtype, Batch Size=$batch_size" >> 4A100_followup.log
-                zip -r 4A100_PASS_deepseek-llama_${task}_${dtype}_bs_${batch_size}.zip ./followup_exp_outputs/vllm/4A100_PASS_${passk}_${task}_${dtype}_bs_${batch_size}/deepseek-ai/DeepSeek-R1-Distill-Llama-8B
-                python upload_to_hf.py --file 4A100_PASS_deepseek-llama_${task}_${dtype}_bs_${batch_size}.zip
             done
         done
     done
@@ -201,8 +183,6 @@ for task in math500; do
                     --passk $passk \
                     --exp_name 4A100_PASS_${passk}_${task}_${dtype}_bs_${batch_size} > 4A100_PASS_${passk}_deepseek-llama_${task}_${dtype}_bs_${batch_size}.log 2>&1
                 echo "$(date): FINISH experiment: PASS_${passk}, Model=DeepSeek-Llama, Task=$task, Dtype=$dtype, Batch Size=$batch_size" >> 4A100_followup.log
-                zip -r 4A100_PASS_deepseek-llama_${task}_${dtype}_bs_${batch_size}.zip ./followup_exp_outputs/vllm/4A100_PASS_${passk}_${task}_${dtype}_bs_${batch_size}/deepseek-ai/DeepSeek-R1-Distill-Llama-8B
-                python upload_to_hf.py --file 4A100_PASS_deepseek-llama_${task}_${dtype}_bs_${batch_size}.zip
             done
         done
     done
