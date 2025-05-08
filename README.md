@@ -28,3 +28,14 @@ huggingface-cli login --token $HF_TOKEN --add-to-git-credential
     - On the 2nd node: `bash sh/run_node_2.sh`. This runs 2-GPU settings on 4 groups of 2 GPUs in parallel.
 
 Output files will be put under `./outputs/vllm` directory.
+
+## Follow-Up Experiments
+
+1. Experiments are arranged in 3 scripts, supposing using 1 8-A100 node:
+    - These three scripts are using different GPUs, so, please run them Concurrently from 3 tmux sessions.
+    - In any tmux session, `cd` to the root directory of this repo. Make sure you are using the reproducible_llm environment.
+    - In the 1st tmux session: `bash sh/run_followup_1.sh`. This runs 4-GPU settings on GPU 4,5,6,7.
+    - In the 2nd tmux sessionL `bash sh/run_followup_2.sh`. This runs some 2-GPU settings on GPU 0,1.
+    - In the 3nd tmux sessionL `bash sh/run_followup_3.sh`. This runs some 2-GPU settings on GPU 2,3.
+
+2. Output files will be archived and uploaded to a hf repo automatically, while locally they will be put under `./followup_exp_outputs/vllm` directory. 
