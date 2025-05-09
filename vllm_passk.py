@@ -16,6 +16,15 @@ from vllm.inputs import TextPrompt, TokensPrompt
 from prompt_util.prompt_template import make_conversation_from_contents
 from evals.tasks import TASK_HANDLER_MAP, TASK_NAMES_TO_YAML, TaskConfig
 
+TASK_MAX_IDX = {
+    'aime24': 29,
+    'math500': 499,
+    'livecodebench_easy': 181,
+    'livecodebench_medium': 205,
+    'livecodebench_hard': 122,
+    'gpqa_diamond': 197,
+}
+
 # Add argument parser
 def parse_args():
     parser = argparse.ArgumentParser(description='Run model inference with configurable parameters')
@@ -48,7 +57,7 @@ def set_seed(seed):
 
 
 # Determine the starting point based on existing .pt files
-def get_resume_point(output_path, batch_size):
+def get_resume_point(output_path, batch_size, task):
     # Find all .pt files in the output directory
     pt_files = glob.glob(f'{output_path}/problem_*_token_ids_*.pt')
     if not pt_files:
@@ -71,6 +80,10 @@ def get_resume_point(output_path, batch_size):
     # Find the largest global_idx and calculate the starting batch
     max_global_idx = max(global_indices)
     resume_point = ((max_global_idx + 1) // batch_size) * batch_size
+    
+    if task in TASK_MAX_IDX and max_global_idx == TASK_MAX_IDX[task]:
+        exit(0)  # All samples have been processed, exit
+
     print(f"Resuming from batch starting at index {resume_point} (max_global_idx={max_global_idx})")
     return resume_point
 
@@ -81,6 +94,8 @@ if __name__ == '__main__':
     # Create outputs directory if it doesn't exist
     output_path = f'./followup_exp_outputs/vllm/{args.exp_name}/{args.model}'
     os.makedirs(output_path, exist_ok=True)
+    
+    start_point = get_resume_point(output_path, args.batch_size, args.task)
 
     if args.task == 'math500':
         dataset = datasets.load_dataset('HuggingFaceH4/MATH-500', split='test')
@@ -135,8 +150,7 @@ if __name__ == '__main__':
     qa_pairs = []
     jsonl_path = f'{output_path}/qa_pairs_{args.dtype}_bs_{args.batch_size}_pass{args.passk}.jsonl'
     
-    start_point = get_resume_point(output_path, args.batch_size)
-    
+   
     for batch_start in range(start_point, total_samples, args.batch_size):
         batch_end = min(batch_start + args.batch_size, total_samples)
         current_batch = conversations[batch_start:batch_end]
