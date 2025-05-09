@@ -46,3 +46,19 @@ Output files will be put under `./outputs/vllm` directory.
     - In the 1st tmux session: `bash sh/run_reorder_1.sh`. This runs 4-GPU settings on GPU 4,5,6,7.
     - In the 2nd tmux sessionL `bash sh/run_reorder_2.sh`. This runs some 2-GPU settings on GPU 0,1.
     - In the 3nd tmux sessionL `bash sh/run_reorder_3.sh`. This runs some 2-GPU settings on GPU 2,3.
+
+4. Run 4-GPU experiments in the regular order:
+    - In a tmux session: `bash 4GPU_forward/run.sh`
+
+5. Run 4-GPU experiments in the reversed order:
+    - In a tmux session: `bash 4GPU_backward/run.sh`
+
+6. Run 2-GPU experiments in the regular order:
+    - In the 1st tmux session: `bash 2GPU_forward/run_1.sh`
+    - In the 2nd tmux session: `bash 2GPU_forward/run_2.sh`
+
+7. Run 2-GPU experiments in the reversed order:
+    - In the 1st tmux session: `bash 2GPU_backward/run_1.sh`
+    - In the 2nd tmux session: `bash 2GPU_backward/run_2.sh`
+
+8. To cover all experiment settings, whenever you launch a 4., please also launch a 6.; Similarly, if you launch a 5., please also launch a 7..
