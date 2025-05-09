@@ -16,7 +16,7 @@ for task in math500; do
                     --batch_size $batch_size \
                     --max_tokens 2048 \
                     --passk $passk \
-                    --exp_name 2A100_PASS_${passk}_${task}_${dtype}_bs_${batch_size} > 2A100_PASS_${passk}_qwen_${task}_${dtype}_bs_${batch_size}.log 2>&1
+                    --exp_name 2A100_PASS_${passk}_${task}_${dtype}_bs_${batch_size} > logs/2A100_PASS_${passk}_qwen_${task}_${dtype}_bs_${batch_size}.log 2>&1
                 echo "$(date): FINISH experiment: PASS_${passk}, Model=Qwen, Task=$task, Dtype=$dtype, Batch Size=$batch_size" >> 2A100_followup.log
             done
         done
@@ -35,7 +35,7 @@ for task in aime24; do
                     --batch_size $batch_size \
                     --max_tokens 2048 \
                     --passk $passk \
-                    --exp_name 2A100_PASS_${passk}_${task}_${dtype}_bs_${batch_size} > 2A100_PASS_${passk}_qwen_${task}_${dtype}_bs_${batch_size}.log 2>&1
+                    --exp_name 2A100_PASS_${passk}_${task}_${dtype}_bs_${batch_size} > logs/2A100_PASS_${passk}_qwen_${task}_${dtype}_bs_${batch_size}.log 2>&1
                 echo "$(date): FINISH experiment: PASS_${passk}, Model=Qwen, Task=$task, Dtype=$dtype, Batch Size=$batch_size" >> 2A100_followup.log
             done
         done
@@ -52,7 +52,7 @@ for task in livecodebench_hard livecodebench_medium livecodebench_easy; do
                 --seed 42 \
                 --batch_size $batch_size \
                 --max_tokens 32768 \
-                --exp_name 2A100_LAYERCAST_${task}_${dtype}_bs_${batch_size} > 2A100_LAYERCAST_deepseek-qwen_${task}_${dtype}_bs_${batch_size}.log 2>&1
+                --exp_name 2A100_LAYERCAST_${task}_${dtype}_bs_${batch_size} > logs/2A100_LAYERCAST_deepseek-qwen_${task}_${dtype}_bs_${batch_size}.log 2>&1
             echo "$(date): FINISH experiment: LAYERCAST, Model=DeepSeek-Qwen, Task=$task, Dtype=$dtype, Batch Size=$batch_size" >> 2A100_followup.log
         done
     done
@@ -70,7 +70,7 @@ for task in math500; do
                     --batch_size $batch_size \
                     --max_tokens 32768 \
                     --passk $passk \
-                    --exp_name 2A100_PASS_${passk}_${task}_${dtype}_bs_${batch_size} > 2A100_PASS_${passk}_deepseek-qwen_${task}_${dtype}_bs_${batch_size}.log 2>&1
+                    --exp_name 2A100_PASS_${passk}_${task}_${dtype}_bs_${batch_size} > logs/2A100_PASS_${passk}_deepseek-qwen_${task}_${dtype}_bs_${batch_size}.log 2>&1
                 echo "$(date): FINISH experiment: PASS_${passk}, Model=DeepSeek-Qwen, Task=$task, Dtype=$dtype, Batch Size=$batch_size" >> 2A100_followup.log
             done
         done
@@ -89,7 +89,7 @@ for task in aime24; do
                     --batch_size $batch_size \
                     --max_tokens 32768 \
                     --passk $passk \
-                    --exp_name 2A100_PASS_${passk}_${task}_${dtype}_bs_${batch_size} > 2A100_PASS_${passk}_deepseek-qwen_${task}_${dtype}_bs_${batch_size}.log 2>&1
+                    --exp_name 2A100_PASS_${passk}_${task}_${dtype}_bs_${batch_size} > logs/2A100_PASS_${passk}_deepseek-qwen_${task}_${dtype}_bs_${batch_size}.log 2>&1
                 echo "$(date): FINISH experiment: PASS_${passk}, Model=DeepSeek-Qwen, Task=$task, Dtype=$dtype, Batch Size=$batch_size" >> 2A100_followup.log
             done
         done
@@ -106,7 +106,7 @@ for task in aime24; do
                 --seed 42 \
                 --batch_size $batch_size \
                 --max_tokens 32768 \
-                --exp_name 2A100_LAYERCAST_${task}_${dtype}_bs_${batch_size} > 2A100_LAYERCAST_deepseek-qwen_${task}_${dtype}_bs_${batch_size}.log 2>&1
+                --exp_name 2A100_LAYERCAST_${task}_${dtype}_bs_${batch_size} > logs/2A100_LAYERCAST_deepseek-qwen_${task}_${dtype}_bs_${batch_size}.log 2>&1
             echo "$(date): FINISH experiment: LAYERCAST, Model=DeepSeek-Qwen, Task=$task, Dtype=$dtype, Batch Size=$batch_size" >> 2A100_followup.log
         done
     done
